@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@layer utilities {
+  /* -- SCROLL LEFT -- */
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .animate-scroll-left {
+    animation: scroll-left linear infinite;
+  }
+
+  /* -- CAROUSEL TRACK -- */
+  @keyframes carousel-track {
+    0% {
+      transform: translateX(0%) scale(1);
+    }
+    25% {
+      transform: translateX(-25%) scale(1.05);
+    }
+    50% {
+      transform: translateX(-50%) scale(0.95);
+    }
+    75% {
+      transform: translateX(-75%) scale(1.05);
+    }
+    100% {
+      transform: translateX(-100%) scale(1);
+    }
+  }
+
+  .animate-carousel-track {
+    animation: carousel-track 20s linear infinite;
+  }
+
+  /* -- ORBITING LOGO ANIMATION -- */
+@layer utilities {
+  @keyframes orbit {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-orbit {
+    animation: orbit 25s linear infinite;
+  }
+
+  .orbit-mask {
+    mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+  }
+}
+}
