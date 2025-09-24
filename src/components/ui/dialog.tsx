@@ -3,6 +3,7 @@
 import * as React from 'react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
+import clsx from 'clsx' // Optional: if you use clsx or classnames
 
 export const Dialog = DialogPrimitive.Root
 
@@ -28,10 +29,22 @@ export const DialogContent = React.forwardRef<
 ))
 DialogContent.displayName = 'DialogContent'
 
-export const DialogHeader = ({ children }: { children: React.ReactNode }) => (
-  <div className="mb-4">{children}</div>
+interface DialogHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode
+}
+
+export const DialogHeader = ({ children, className, ...props }: DialogHeaderProps) => (
+  <div className={clsx("mb-4", className)} {...props}>
+    {children}
+  </div>
 )
 
-export const DialogTitle = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="text-lg font-semibold">{children}</h2>
+interface DialogTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  children: React.ReactNode
+}
+
+export const DialogTitle = ({ children, className, ...props }: DialogTitleProps) => (
+  <h2 className={clsx("text-lg font-semibold", className)} {...props}>
+    {children}
+  </h2>
 )

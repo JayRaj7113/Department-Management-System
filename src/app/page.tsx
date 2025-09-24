@@ -449,10 +449,12 @@ function ImageCard({
   imageSrc,
   title,
   description,
+  designation,
 }: {
   imageSrc: string
   title: string
   description: string
+  designation?: string
 }) {
   return (
     <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300 w-full max-w-sm mx-auto">
@@ -465,6 +467,9 @@ function ImageCard({
       />
       <div className="p-4">
         <h3 className="text-lg font-semibold text-orange-600 mb-2">{title}</h3>
+        {designation && (
+          <div className="text-sm font-medium text-gray-500 mb-1">{designation}</div>
+        )}
         <p className="text-gray-700 text-sm">{description}</p>
       </div>
     </div>
@@ -497,7 +502,7 @@ function TeacherCard({
   )
 }
 
-export function Carousel({
+function Carousel({
   items,
   visibleCards = 3,
 }: {

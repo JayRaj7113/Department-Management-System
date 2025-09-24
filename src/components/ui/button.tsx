@@ -7,6 +7,7 @@ type ButtonProps = {
   variant?: 'primary' | 'secondary' | 'outline'
   size?: 'sm' | 'md' | 'lg'
   type?: 'button' | 'submit'
+  className?: string // <-- add this line
 }
 
 export const Button = ({
@@ -15,6 +16,7 @@ export const Button = ({
   variant = 'primary',
   size = 'md',
   type = 'button',
+  className, // <-- add this line
 }: ButtonProps) => {
   const base = 'rounded px-4 py-2 font-medium transition'
 
@@ -34,7 +36,7 @@ export const Button = ({
     <button
       type={type}
       onClick={onClick}
-      className={clsx(base, variants[variant], sizes[size])}
+      className={clsx(base, variants[variant], sizes[size], className)} // <-- merge className
     >
       {children}
     </button>

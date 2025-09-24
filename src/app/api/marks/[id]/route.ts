@@ -1,30 +1,39 @@
-// app/api/marks/[id]/route.ts
 import { NextResponse } from 'next/server'
-import connectToDB from '@/utlis/db'
 import mongoose from 'mongoose'
 import { Marks } from '@/models/Marks'
+import connectDB from '@/utlis/db'
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+interface SubjectMark {
+  name: string
+  marks: Record<string, number | null>
+}
+
+interface MarksDoc {
+  semester: number
+  subjects: SubjectMark[]
+  createdAt: Date
+}
+
+export async function GET(req: Request) {
   try {
-    await connectToDB()
+    await connectDB()
 
-    const studentId = params.id
+    const url = new URL(req.url)
+    const pathSegments = url.pathname.split('/')
+    const studentId = pathSegments[pathSegments.length - 1]
 
     if (!mongoose.Types.ObjectId.isValid(studentId)) {
       return NextResponse.json({ error: 'Invalid student ID' }, { status: 400 })
     }
 
-    // Step 1: Fetch marks document(s)
-    const marksDocs = await Marks.find({ studentId }).lean()
+    const marksDocsRaw = await Marks.find({ studentId }).lean()
+    // Cast via unknown to silence TS error
+    const marksDocs = marksDocsRaw as unknown as MarksDoc[]
 
     if (!marksDocs.length) {
       return NextResponse.json({ message: 'No marks found for this student' }, { status: 404 })
     }
 
-    // Step 2: Flatten subjects and marks
     const flattenedMarks = marksDocs.flatMap(doc =>
       doc.subjects.flatMap(subject =>
         Object.entries(subject.marks || {})

@@ -123,7 +123,7 @@ export default function TeacherDashboard() {
       {/* Mobile Menu Toggle */}
       <div className="md:hidden flex justify-between items-center mb-4">
         <h1 className="text-2xl font-semibold">Teacher Dashboard</h1>
-        <Button variant="ghost" onClick={() => setSidebarOpen(!sidebarOpen)}>
+        <Button variant="primary" onClick={() => setSidebarOpen(!sidebarOpen)}>
           <Menu className="h-6 w-6" />
         </Button>
       </div>
@@ -205,7 +205,7 @@ export default function TeacherDashboard() {
                     <p className='text-sm text-gray-500'>{t.email || 'N/A'}</p>
                   </div>
                   <Button
-                    variant="ghost"
+                    variant="primary"
                     className="text-sm"
                     onClick={() => setExpandedCard(expandedCard === t._id ? null : t._id || '')}
                   >

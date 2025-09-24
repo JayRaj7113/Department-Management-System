@@ -1,9 +1,25 @@
 // src/lib/auth.ts
 import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import User from '@/models/User' // Assuming you have a Mongoose model
+import User from '@/models/User' // Mongoose model
 import bcrypt from 'bcryptjs'
 import connectDB from '@/utlis/db'
+
+// Module augmentation to add `id` to session.user
+declare module 'next-auth' {
+  interface Session {
+    user: {
+      id: string
+      name?: string | null
+      email?: string | null
+      image?: string | null
+    }
+  }
+
+  interface User {
+    id: string
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -34,9 +50,11 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+
   session: {
     strategy: 'jwt',
   },
+
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -44,15 +62,22 @@ export const authOptions: NextAuthOptions = {
       }
       return token
     },
+
     async session({ session, token }) {
       if (token && session.user) {
-        session.user.id = token.id as string
+        // Merge the existing user data and add id property
+        session.user = {
+          ...session.user,
+          id: token.id as string,
+        }
       }
       return session
     },
   },
+
   pages: {
-    signIn: '/login', // Make sure this page exists
+    signIn: '/login', // Your custom sign-in page
   },
+
   secret: process.env.NEXTAUTH_SECRET,
 }

@@ -4,6 +4,11 @@ import connectDB from '@/utlis/db'
 import { Marks } from '@/models/Marks'
 import { verifyToken } from '@/lib/jwt'
 
+interface Subject {
+  name: string;
+  marks?: Record<string, number | null>;
+}
+
 export async function GET(req: NextRequest) {
   try {
     await connectDB()
@@ -12,7 +17,7 @@ export async function GET(req: NextRequest) {
     if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
     const decoded = verifyToken(token)
-    if (!decoded || !decoded.userId) {
+    if (!decoded || !decoded.id) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
     }
 
@@ -21,7 +26,7 @@ export async function GET(req: NextRequest) {
     const subject = url.searchParams.get('subject')
     const examType = url.searchParams.get('examType')
 
-    const query: any = { studentId: decoded.userId }
+    const query: any = { studentId: decoded.id }
     if (semester) {
       query.semester = Number(semester)
     }
@@ -40,11 +45,11 @@ export async function GET(req: NextRequest) {
 
     // Step 3: Filter by subject and/or examType
     const filtered = docs.map(doc => {
-      const matchedSubjects = doc.subjects.filter(s => {
+      const matchedSubjects = (doc.subjects as Subject[]).filter((s: Subject) => {
         return subject ? s.name.trim() === subject.trim() : true
       })
 
-      const projectedSubjects = matchedSubjects.map(s => {
+      const projectedSubjects = matchedSubjects.map((s: Subject) => {
         if (examType) {
           return {
             name: s.name,

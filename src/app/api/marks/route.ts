@@ -3,6 +3,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import connectDB from '@/utlis/db'
 import { Marks } from '@/models/Marks'
 
+// Define Subject type used in the Marks model
+interface Subject {
+  name: string;
+  marks: Record<string, number>;
+}
+
 export async function POST(req: NextRequest) {
   await connectDB()
   const body = await req.json()
@@ -33,7 +39,7 @@ export async function POST(req: NextRequest) {
         })
       } else {
         // 2. Check if subject exists
-        const subjectIndex = marksDoc.subjects.findIndex(s => s.name === subject)
+        const subjectIndex = marksDoc.subjects.findIndex((s: Subject) => s.name === subject)
 
         if (subjectIndex === -1) {
           // Push new subject

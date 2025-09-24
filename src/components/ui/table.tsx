@@ -1,31 +1,70 @@
 'use client'
 
 import * as React from 'react'
+import clsx from 'clsx' // optional, remove if not using
 
-export function Table({ children }: { children: React.ReactNode }) {
+interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
+  children: React.ReactNode
+}
+
+export function Table({ children, className, ...props }: TableProps) {
   return (
     <div className="w-full overflow-x-auto">
-      <table className="w-full border-collapse text-sm">{children}</table>
+      <table className={clsx("w-full border-collapse text-sm", className)} {...props}>
+        {children}
+      </table>
     </div>
   )
 }
 
-export function TableHeader({ children }: { children: React.ReactNode }) {
-  return <thead className="bg-gray-100 text-left">{children}</thead>
+interface TableSectionProps extends React.HTMLAttributes<HTMLTableSectionElement> {
+  children: React.ReactNode
 }
 
-export function TableBody({ children }: { children: React.ReactNode }) {
-  return <tbody className="divide-y divide-gray-200">{children}</tbody>
+export function TableHeader({ children, className, ...props }: TableSectionProps) {
+  return (
+    <thead className={clsx("bg-gray-100 text-left", className)} {...props}>
+      {children}
+    </thead>
+  )
 }
 
-export function TableRow({ children }: { children: React.ReactNode }) {
-  return <tr className="hover:bg-gray-50">{children}</tr>
+export function TableBody({ children, className, ...props }: TableSectionProps) {
+  return (
+    <tbody className={clsx("divide-y divide-gray-200", className)} {...props}>
+      {children}
+    </tbody>
+  )
 }
 
-export function TableHead({ children }: { children: React.ReactNode }) {
-  return <th className="px-4 py-2 font-medium text-gray-600">{children}</th>
+interface TableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {
+  children: React.ReactNode
 }
 
-export function TableCell({ children }: { children: React.ReactNode }) {
-  return <td className="px-4 py-2">{children}</td>
+export function TableRow({ children, className, ...props }: TableRowProps) {
+  return (
+    <tr className={clsx("hover:bg-gray-50", className)} {...props}>
+      {children}
+    </tr>
+  )
+}
+
+interface TableCellProps extends React.ThHTMLAttributes<HTMLTableCellElement> {
+  children: React.ReactNode
+}
+
+export function TableHead({ children, className, ...props }: TableCellProps) {
+  return (
+    <th className={clsx("px-4 py-2 font-medium text-gray-600", className)} {...props}>
+      {children}
+    </th>
+  )
+}
+
+export function TableCell({ children, className, ...props }: TableCellProps) {
+  return (
+    <td className={clsx("px-4 py-2", className)} {...props}>
+      {children}
+    </td>
+  )
 }

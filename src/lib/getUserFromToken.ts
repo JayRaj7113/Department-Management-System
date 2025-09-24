@@ -3,8 +3,8 @@ import { cookies } from 'next/headers'
 
 const JWT_SECRET = process.env.JWT_SECRET as string
 
-export function getUserFromToken() {
-  const token = cookies().get('token')?.value
+export async function getUserFromToken() {
+  const token = (await cookies()).get('token')?.value
 
   if (!token) return null
 

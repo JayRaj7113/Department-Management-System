@@ -54,9 +54,9 @@ export async function POST(req: NextRequest) {
     const decoded = verifyToken(req)
     const body = await req.json()
 
-    const updateData = {
-      firstName: body.firstName,
-      middleName: body.middleName,
+    const updateData: Record<string, any> = {
+  firstName: body.firstName,
+  middleName: body.middleName,
       lastName: body.lastName,
       email: body.email,
       phone: body.phone,

@@ -1,8 +1,8 @@
-// controllers/marksController.ts
+import { NextApiRequest, NextApiResponse } from 'next'
 import { Marks } from '../models/Marks'
 import mongoose from 'mongoose'
 
-export const uploadMarks = async (req, res) => {
+export const uploadMarks = async (req: NextApiRequest, res: NextApiResponse) => {
   const { studentId, semester, subject, examType, marks } = req.body
 
   if (!studentId || !semester || !subject || !examType || marks == null) {
@@ -25,7 +25,7 @@ export const uploadMarks = async (req, res) => {
       })
     } else {
       // Step 2: Check if subject exists inside subjects[]
-      const subjectIndex = marksDoc.subjects.findIndex(s => s.name === subject)
+      const subjectIndex = marksDoc.subjects.findIndex((s: { name: string }) => s.name === subject)
 
       if (subjectIndex === -1) {
         // Subject doesn't exist → push new subject

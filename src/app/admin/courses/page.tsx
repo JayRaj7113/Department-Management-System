@@ -213,7 +213,7 @@ export default function Courses() {
                 <TableCell className="py-2">{subj.semester}</TableCell>
                 <TableCell className="py-2">{getTeacherName(subj.assignedTeacher)}</TableCell>
                 <TableCell className="py-2">
-                  <Button variant="ghost" size="sm">
+                  <Button variant="primary" size="sm">
                     <MoreHorizontal size={16} />
                   </Button>
                 </TableCell>

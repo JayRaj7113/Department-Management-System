@@ -1,14 +1,33 @@
 // components/ui/card.tsx
 import React from 'react'
+import clsx from 'clsx' // Optional: for merging class names
 
-export function Card({ children }: { children: React.ReactNode }) {
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode
+}
+
+export function Card({ children, className, ...props }: CardProps) {
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+    <div
+      className={clsx(
+        'bg-white p-6 rounded-xl shadow-md border border-gray-200',
+        className
+      )}
+      {...props}
+    >
       {children}
     </div>
   )
 }
 
-export function CardContent({ children }: { children: React.ReactNode }) {
-  return <div>{children}</div>
+interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode
+}
+
+export function CardContent({ children, className, ...props }: CardContentProps) {
+  return (
+    <div className={clsx('', className)} {...props}>
+      {children}
+    </div>
+  )
 }

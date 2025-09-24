@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { saveAs } from 'file-saver'
 import * as XLSX from 'xlsx'
 import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 
 const semesters = [1, 2, 3, 4, 5, 6, 7, 8]
 
@@ -16,7 +17,8 @@ const examTypes = [
   { label: 'CA2', max: 10 }
 ]
 
-export default function MarksPage() {
+// Move all logic to a separate component
+function MarksPageContent() {
   const searchParams = useSearchParams()
   const subjectFromUrl = searchParams.get('subjectId')
   const semesterFromUrl = searchParams.get('semester')
@@ -198,5 +200,14 @@ export default function MarksPage() {
         </div>
       )}
     </div>
+  )
+}
+
+// Export the page wrapped in Suspense
+export default function MarksPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MarksPageContent />
+    </Suspense>
   )
 }

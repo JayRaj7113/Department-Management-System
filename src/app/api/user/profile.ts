@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import connectDB from '@/utils/db'
+import connectDB from '@/utlis/db'
 import User from '@/models/User' // assuming User model already exists
 
 export async function PATCH(req: NextRequest) {
