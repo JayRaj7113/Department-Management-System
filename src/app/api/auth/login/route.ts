@@ -19,6 +19,9 @@ export async function POST(req: Request) {
 
     let account = await User.findOne({ email })
     let role = 'student'
+    if(account.status !== 'approved'){
+      return NextResponse.json({ error: 'Your account is not approved yet.' }, { status: 403 })
+    }
 
     if (!account) {
       account = await Teacher.findOne({ email })
