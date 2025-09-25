@@ -127,6 +127,14 @@ export default function LoginPage() {
               Sign up
             </Link>
           </p>
+
+          <p className="text-center mt-5 text-sm text-gray-600">
+            Else visit{' '}
+            <Link href="/" className="text-orange-600 font-medium hover:underline">
+              Home
+            </Link>
+           {' '}to know more about us.
+          </p>
         </motion.div>
       </div>
     </div>
